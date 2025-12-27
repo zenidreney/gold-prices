@@ -9,7 +9,7 @@ const __dirname = import.meta.dirname;
 // console.log(__dirname, "hello")
 
 const server = http.createServer(async (req, res) => {
-	await serveStatic(res, __dirname);
+	await serveStatic(req, res, __dirname);
 });
 
 server.listen(PORT, () => console.log(`Server on port: ${PORT}`));
