@@ -1,9 +1,15 @@
-import path from "node:path"
+import fs from "node:fs/promises";
+import path from "node:path";
 
-export function serveStatic(baseDir) {
-    const filePath = path.join(baseDir, "public", "index.html")
+import { sendResponse } from "./sendResponse.js";
 
-    //console.log("serve static", filePath)
+export async function serveStatic(res, baseDir) {
+	const filePath = path.join(baseDir, "public", "index.html");
 
-    return filePath
+	try {
+		const content = await fs.readFile(filePath);
+		sendResponse(res, 200, "text/html", content);
+	} catch (error) {
+		console.log(error);
+	}
 }
