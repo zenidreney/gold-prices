@@ -3,5 +3,7 @@ import path from "node:path"
 export function serveStatic(baseDir) {
     const filePath = path.join(baseDir, "public", "index.html")
 
-    console.log("serve static", filePath)
+    //console.log("serve static", filePath)
+
+    return filePath
 }
