@@ -1,15 +1,13 @@
 async function fetchGoldPrice() {
-    const res = await fetch("/api/prices")
-    const data = await res.json()
+	const res = await fetch("/api/prices");
+	const data = await res.json();
     console.log(data)
 
-    const priceDisplaySpan = document.getElementById("price-display")
+	const priceDisplaySpan = document.getElementById("price-display");
 
-    
-    priceDisplaySpan.textContent = data
-
+	priceDisplaySpan.textContent = data.price;
 }
 
-setInterval(fetchGoldPrice, 2500)
+setInterval(fetchGoldPrice, 2500);
 
-fetchGoldPrice()
+fetchGoldPrice();
