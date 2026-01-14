@@ -1,9 +1,8 @@
 import fs from "node:fs/promises";
 import path from "node:path";
-
-import { sendResponse } from "./sendResponse.js";
+//import { send } from "node:process";
 import { getContentType } from "./getContentType.js";
-import { send } from "node:process";
+import { sendResponse } from "./sendResponse.js";
 
 export async function serveStatic(req, res, baseDir) {
 	const publicDir = path.join(baseDir, "public");
@@ -15,9 +14,9 @@ export async function serveStatic(req, res, baseDir) {
 	try {
 		const content = await fs.readFile(filePath);
 		const ext = path.extname(filePath)
-		console.log("I am ext", ext)
+		//console.log("I am ext", ext)
 		const contentType = getContentType(ext)
-		console.log("content laaa", contentType)
+		//console.log("content laaa", contentType)
 
 		sendResponse(res, 200, contentType, content);
 	} catch (error) {
