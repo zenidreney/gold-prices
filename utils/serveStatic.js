@@ -14,13 +14,10 @@ export async function serveStatic(req, res, baseDir) {
 	try {
 		const content = await fs.readFile(filePath);
 		const ext = path.extname(filePath)
-		//console.log("I am ext", ext)
 		const contentType = getContentType(ext)
-		//console.log("content laaa", contentType)
 
 		sendResponse(res, 200, contentType, content);
 	} catch (error) {
-		console.log(error.code);
 
 		if(error.code === "ENOENT") {
 

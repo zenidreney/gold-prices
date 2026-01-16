@@ -1,23 +1,30 @@
 const priceDisplaySpan = document.getElementById("price-display");
 const connectionStatusPara = document.getElementById("connection-status");
 const investBtn = document.getElementById("invest-btn");
-const closeBtn = document.getElementById("close-btn")
+const closeBtn = document.getElementById("close-btn");
 const investForm = document.getElementById("invest-form");
-const modal = document.querySelector("dialog")
-
+const modal = document.querySelector("dialog");
+const modalPara = document.getElementById("investment-summary")
+const investmentAmount = document.getElementById("investment-amount")
 
 let pollInterval = null;
+let currentGoldPrice = null;
 
-function startPolling() {
-	if (pollInterval === null) {
-		pollInterval = setInterval(fetchGoldPrice, 2500);
-	}
-}
+// Event Listeners
 
-function stopPolling() {
-	clearInterval(pollInterval);
-	pollInterval = null;
-}
+investForm.addEventListener("submit", (e) => {
+	e.preventDefault();
+	const moneyInvested = Number(investmentAmount.value)
+	const goldPurchased = (moneyInvested / currentGoldPrice).toFixed(2)
+
+	modalPara.textContent = `You just bought ${goldPurchased} ounces (ozt) for £${moneyInvested}. With the current price of £${currentGoldPrice} / Oz. You will receive documentation shortly.`
+
+	modal.showModal();
+});
+
+closeBtn.addEventListener("click", () => modal.close());
+
+// Price update prototype
 
 async function fetchGoldPrice() {
 	try {
@@ -28,7 +35,9 @@ async function fetchGoldPrice() {
 		}
 
 		const data = await res.json();
-		//console.log(data)
+		// console.log(data.price);
+
+		currentGoldPrice = Number(data.price);
 		priceDisplaySpan.textContent = data.price;
 		connectionStatusPara.textContent = "Live Prices 🟢";
 		investBtn.disabled = false;
@@ -47,12 +56,15 @@ async function fetchGoldPrice() {
 
 fetchGoldPrice();
 
-investForm.addEventListener("submit", (e) => {
-	e.preventDefault()
-	console.log("invest button clicked");
+// Util functions
 
-	modal.showModal()
+function startPolling() {
+	if (pollInterval === null) {
+		pollInterval = setInterval(fetchGoldPrice, 2500);
+	}
+}
 
-});
-
-closeBtn.addEventListener("click", () => modal.close())
+function stopPolling() {
+	clearInterval(pollInterval);
+	pollInterval = null;
+}

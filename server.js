@@ -8,18 +8,13 @@ console.log("server on");
 const PORT = 8000;
 
 const __dirname = import.meta.dirname;
-// console.log(__dirname, "hello")
 
 const server = http.createServer(async (req, res) => {
 	if (req.url === "/api/prices") {
 		const price = getPrices();
-		console.log(typeof price);
 
 		sendResponse(res, 200, "application/json", JSON.stringify({ price }));
 
-		// res.statusCode = 200;
-		// res.setHeader("Content-Type", "application/json");
-		// res.end(JSON.stringify(price));
 		return;
 	}
 

@@ -10,7 +10,6 @@ export function getContentType(ext) {
      ".gif": "image/gif",
      ".svg": "image/svg+xml"
    }
-   console.log("hello mello", types[ext.toLowerCase()])
 
     return types[ext.toLowerCase()] || "text/html"
 }
